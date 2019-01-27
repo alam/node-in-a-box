@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+# If this is being run from a terminal, allocate a pseudo-TTY (-t) when
+# executing `docker run`.
+
+[ -t 1 ] && isTerminal=true
+
+docker run --rm -i ${isTerminal:+-t} \
+    -v "$HOME/.yarn":/home/node/.yarn \
+    -v "$HOME/.config/yarn":/home/node/.config/yarn \
+    -v "$(pwd)":"$(pwd)" \
+    -w "$(pwd)" \
+    ${PORTS:+-p "$PORTS"} \
+    ${NETWORK:+--network "$NETWORK"} \
+    node-in-a-box:latest \
+    node "$@"

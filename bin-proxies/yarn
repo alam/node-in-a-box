@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+docker run --rm -i -t \
+    -v "$HOME/.yarn":/home/node/.yarn \
+    -v "$HOME/.config/yarn":/home/node/.config/yarn \
+    -v "$(pwd)":"$(pwd)" \
+    -w "$(pwd)" \
+    ${PORTS:+-p "$PORTS"} \
+    ${NETWORK:+--network "$NETWORK"} \
+    node-in-a-box:latest \
+    yarn "$@"

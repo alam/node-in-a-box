@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+docker run --rm -i -t \
+    -v "$HOME/.yarn":/home/node/.yarn \
+    -v "$HOME/.config/yarn":/home/node/.config/yarn \
+    -v "$(pwd)":"$(pwd)" \
+    -w "$(pwd)" \
+    ${PORTS:+-p "$PORTS"} \
+    ${NETWORK:+--network "$NETWORK"} \
+    -p 9229:9229 \
+    node-in-a-box:latest \
+    node --inspect-brk=0.0.0.0 "$@"
